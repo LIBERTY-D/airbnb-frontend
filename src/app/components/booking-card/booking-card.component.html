@@ -1,0 +1,20 @@
+<div class="bg-white rounded-2xl shadow p-4 mb-4 flex gap-4">
+  <img
+    [src]="booking.mainImage"
+    alt="Listing image"
+    class="w-32 h-24 object-cover rounded-xl"
+  />
+  <div class="flex-1">
+    <h3 class="text-lg font-semibold text-gray-800">
+      {{ booking.houseName }}
+    </h3>
+    <p class="text-gray-600 text-sm">{{ booking.location }}</p>
+    <p class="text-gray-500 text-sm">
+      {{ formatDate(booking.checkIn) }} →
+      {{ formatDate(booking.checkOut) }}
+    </p>
+    <p class="mt-1 text-gray-700 font-medium">
+      ${{ booking.totalPrice }} total
+    </p>
+  </div>
+</div>

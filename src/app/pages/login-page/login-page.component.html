@@ -1,0 +1,32 @@
+<div class="max-w-5xl mx-auto p-6">
+  <!-- Header -->
+  <div class="mb-6 flex justify-between items-center cursor-pointer">
+    <!-- <h2 class="text-2xl font-bold text-primary">Login</h2> -->
+    <a
+      (click)="goToHomePage()"
+      class="flex items-center text-primary hover:underline"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mr-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Back to Home
+    </a>
+  </div>
+  <!-- lOGIN-->
+  <app-login-form
+    (formData)="loginWithEmailAndPassword($event)"
+    (github)="loginWithGithub()"
+    (google)="loginWithGoogle()"
+  ></app-login-form>
+</div>

@@ -1,0 +1,231 @@
+<!-- Top nav actions -->
+<div class="mb-6 flex justify-between items-center max-w-2xl mx-auto px-4">
+  <button
+    (click)="goBackHome()"
+    class="flex items-center text-primary font-medium hover:underline"
+  >
+    ← <span class="ml-1">Back to Home</span>
+  </button>
+  <button
+    (click)="logout()"
+    class="px-4 py-2 bg-primary text-white rounded-xl hover:bg-secondary transition"
+  >
+    Logout
+  </button>
+</div>
+
+<!-- Account Info -->
+<div class="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-md">
+  <h2 class="text-2xl font-bold text-primary mb-6">My Account</h2>
+
+  <div class="space-y-6">
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="font-semibold">Name</p>
+        <p class="text-gray-600">{{ user?.name }}</p>
+      </div>
+      <button
+        (click)="openEditModal('name')"
+        class="text-primary hover:underline font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="font-semibold">Email</p>
+        <p class="text-gray-600">{{ user?.email }}</p>
+      </div>
+      <button
+        (click)="openEditModal('email')"
+        class="text-primary hover:underline font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <div>
+        <p class="font-semibold">Phone</p>
+        <p class="text-gray-600">{{ user?.phone }}</p>
+      </div>
+      <button
+        (click)="openEditModal('phone')"
+        class="text-primary hover:underline font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <div
+      class="flex justify-between items-center"
+      *ngIf="user?.provider !== 'GITHUB' && user?.provider !== 'GOOGLE'"
+    >
+      <div>
+        <p class="font-semibold">Password</p>
+        <p class="text-gray-600">••••••••</p>
+      </div>
+      <button
+        (click)="openEditModal('password')"
+        class="text-primary hover:underline font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <div
+      class="flex justify-between items-center"
+      *ngIf="user?.roles?.includes('ROLE_ADMIN')"
+    >
+      <div>
+        <p class="font-semibold">Joined Year</p>
+        <p class="text-gray-600">{{ user?.joinedYear }}</p>
+      </div>
+      <button
+        (click)="openEditModal('joinedYear')"
+        class="text-primary hover:underline font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <div
+      class="flex justify-between items-center"
+      *ngIf="user?.roles?.includes('ROLE_ADMIN')"
+    >
+      <div>
+        <p class="font-semibold">Superhost</p>
+        <p class="text-gray-600">{{ user?.superhost ? "Yes" : "No" }}</p>
+      </div>
+      <button
+        (click)="openEditModal('superhost')"
+        class="text-primary hover:underline font-medium"
+      >
+        Edit
+      </button>
+    </div>
+
+    <hr class="my-8" />
+
+    <!-- Danger Zone -->
+    <div class="text-center">
+      <h3 class="text-lg font-semibold text-red-600 mb-2">Danger Zone</h3>
+      <p class="text-sm text-gray-500 mb-4">
+        Once you delete your account, there is no going back. Please be certain.
+      </p>
+      <button
+        (click)="confirmingDelete = true"
+        class="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 font-semibold"
+      >
+        Delete My Account
+      </button>
+    </div>
+  </div>
+</div>
+<!-- MODAL -->
+<div
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  *ngIf="editingField"
+>
+  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+    <h3 class="text-xl font-semibold text-primary mb-4">
+      Edit {{ editingField }}
+    </h3>
+    <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="space-y-4">
+      <!-- Normal input -->
+      <input
+        *ngIf="editingField !== 'superhost' && editingField !== 'password'"
+        formControlName="value"
+        type="{{ editingField === 'joinedYear' ? 'number' : 'text' }}"
+        class="w-full p-3 border rounded-xl shadow-sm"
+        [ngClass]="{
+          'border-red-500':
+            editForm.get('value')?.invalid && editForm.get('value')?.touched
+        }"
+      />
+
+      <!-- Password fields -->
+      <div *ngIf="editingField === 'password'" class="space-y-4">
+        <input
+          formControlName="value"
+          type="password"
+          placeholder="New Password"
+          class="w-full p-3 border rounded-xl shadow-sm"
+          [ngClass]="{
+            'border-red-500':
+              editForm.get('value')?.invalid && editForm.get('value')?.touched
+          }"
+        />
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          class="w-full p-3 border rounded-xl shadow-sm"
+          [ngClass]="{
+            'border-red-500':
+              editForm.errors?.['passwordMismatch'] &&
+              editForm.get('confirmPassword')?.touched
+          }"
+        />
+        <div
+          *ngIf="editForm.errors?.['passwordMismatch']"
+          class="text-red-500 text-sm"
+        >
+          Passwords do not match.
+        </div>
+      </div>
+
+      <select
+        *ngIf="editingField === 'superhost'"
+        formControlName="value"
+        class="w-full p-3 border rounded-xl shadow-sm"
+      >
+        <option [ngValue]="true">Yes</option>
+        <option [ngValue]="false">No</option>
+      </select>
+
+      <div class="flex justify-end gap-3 pt-4">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="px-4 py-2 rounded-xl border text-gray-600 hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-primary text-white rounded-xl hover:bg-secondary"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- DELETE CONFIRM MODAL -->
+<div
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  *ngIf="confirmingDelete"
+>
+  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center">
+    <h3 class="text-xl font-semibold text-red-600 mb-4">Delete Account?</h3>
+    <p class="text-gray-600 mb-6">
+      This action is permanent. Are you sure you want to continue?
+    </p>
+    <div class="flex justify-center gap-4">
+      <button
+        (click)="confirmingDelete = false"
+        class="px-4 py-2 rounded-xl border text-gray-600 hover:bg-gray-100"
+      >
+        Cancel
+      </button>
+      <button
+        (click)="deleteAccount()"
+        class="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700"
+      >
+        Yes, Delete
+      </button>
+    </div>
+  </div>
+</div>

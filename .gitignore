@@ -1,0 +1,61 @@
+# ====================
+# Angular Build Output
+# ====================
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# ================
+# Node Dependencies
+# ================
+/node_modules
+npm-debug.log*
+yarn-error.log*
+
+# ========================
+# Angular CLI Cache & Misc
+# ========================
+/.angular/cache
+/coverage
+testem.log
+/libpeerconnection.log
+/connect.lock
+.typings/
+.sass-cache/
+
+
+# ========================
+# VS Code Workspace Settings
+# ========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ========================
+# System Files
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# Optional (Clean Up If Not Used)
+# ========================
+.idea/
+.history/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# ========================
+# Environment Files (Keep dev only)
+# ========================
+src/environments/*
+!src/environments/
+!src/environments/environment.development.ts
+!src/environments/environment.ts

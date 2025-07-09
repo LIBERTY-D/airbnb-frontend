@@ -1,0 +1,56 @@
+export const data = [
+  {
+    id: 0,
+    title: 'Oceanview Retreat',
+    location: { city: 'Santa Monica', state: 'CA', country: 'USA' },
+    images: {
+      main: 'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+      gallery: [
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+      ],
+    },
+    host: { name: 'Jane', joinedYear: 2021, isSuperhost: true },
+    features: {
+      bedrooms: 2,
+      bathrooms: 2,
+      guests: 4,
+      wifi: true,
+      fireplace: false,
+      mountainView: false,
+    },
+    description: 'A cozy place by the sea.',
+    amenities: ['WiFi', 'Air Conditioning'],
+    pricing: { perNight: 250, rating: 4.8 },
+    availability: { startDate: '', endDate: '' },
+  },
+  {
+    id: 0,
+    title: 'Oceanview Retreat',
+    location: { city: 'Santa Monica', state: 'CA', country: 'USA' },
+    images: {
+      main: 'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+      gallery: [
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+        'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?w=600&auto=format&fit=crop&q=60',
+      ],
+    },
+    host: { name: 'Jane', joinedYear: 2021, isSuperhost: true },
+    features: {
+      bedrooms: 2,
+      bathrooms: 2,
+      guests: 4,
+      wifi: true,
+      fireplace: false,
+      mountainView: false,
+    },
+    description: 'A cozy place by the sea.',
+    amenities: ['WiFi', 'Air Conditioning'],
+    pricing: { perNight: 250, rating: 4.8 },
+    availability: { startDate: '', endDate: '' },
+  },
+];

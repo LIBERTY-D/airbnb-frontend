@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import 'flatpickr/dist/flatpickr.min.css';
+
+@theme {
+  --color-primary: #2cb1bc;
+  --color-secondary: #239aa6;
+  --color-tertiary: #2399a3;
+}
+@keyframes slide-in-from-right {
+  0% {
+    transform: translateX(-115%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(30%);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-to-right {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-in-from-right {
+  animation: slide-in-from-right 15s ease forwards;
+}
+
+.animate-slide-out-to-right {
+  animation: slide-out-to-right 5s ease forwards;
+}

@@ -1,0 +1,115 @@
+<div class="max-w-5xl mx-auto px-4 py-12">
+  <!-- Hero -->
+  <div class="text-center mb-10">
+    <h1 class="text-5xl font-extrabold text-primary mb-4">Become a Host</h1>
+    <p class="text-lg text-gray-700">
+      Earn money by sharing your space. Start hosting and help guests feel at
+      home.
+    </p>
+  </div>
+
+  <!-- Benefits -->
+  <div class="grid md:grid-cols-3 gap-6 mb-12">
+    <div
+      class="bg-gradient-to-tr from-primary/10 to-white border border-primary/20 p-6 rounded-2xl shadow"
+    >
+      <h2 class="text-xl font-semibold text-primary mb-2">
+        💸 Earn Extra Income
+      </h2>
+      <p class="text-gray-700">
+        Turn your property into a reliable income stream.
+      </p>
+    </div>
+    <div
+      class="bg-gradient-to-tr from-primary/10 to-white border border-primary/20 p-6 rounded-2xl shadow"
+    >
+      <h2 class="text-xl font-semibold text-primary mb-2">
+        📅 Flexible Hosting
+      </h2>
+      <p class="text-gray-700">
+        Host on your terms – choose when and how often.
+      </p>
+    </div>
+    <div
+      class="bg-gradient-to-tr from-primary/10 to-white border border-primary/20 p-6 rounded-2xl shadow"
+    >
+      <h2 class="text-xl font-semibold text-primary mb-2">
+        🛡️ Support & Security
+      </h2>
+      <p class="text-gray-700">
+        We’ve got your back with 24/7 support and secure payouts.
+      </p>
+    </div>
+  </div>
+
+  <!-- Guidelines -->
+  <div
+    class="bg-primary/5 p-6 rounded-2xl shadow mb-12 border-l-4 border-primary"
+  >
+    <h2 class="text-2xl font-bold text-primary mb-4">Hosting Guidelines</h2>
+    <ul class="list-disc list-inside text-gray-800 space-y-2">
+      <li>✅ Provide accurate listing information and images.</li>
+      <li>🧼 Maintain cleanliness and safety standards.</li>
+      <li>💬 Communicate promptly and respectfully.</li>
+      <li>📋 Ensure your space meets local legal/tax requirements.</li>
+      <li>🔒 Respect your guests’ privacy and comfort.</li>
+      <li>📆 Avoid cancellations unless absolutely necessary.</li>
+    </ul>
+  </div>
+
+  <!-- Account & Verification Notice -->
+  <div
+    class="bg-yellow-50 border-l-4 border-yellow-400 p-5 rounded-2xl shadow mb-8"
+  >
+    <h3 class="text-lg font-semibold text-yellow-800 mb-2">
+      ⚠️ Before You Begin
+    </h3>
+    <p class="text-gray-800">
+      Please note: We will check if you have an existing account and if your
+      account is verified before allowing you to start hosting. Verification
+      helps us maintain a safe and trusted community for all users.
+    </p>
+  </div>
+
+  <!-- Email Capture -->
+  <div
+    class="mb-12 bg-white border border-primary/20 p-6 rounded-2xl shadow-lg text-center max-w-xl mx-auto"
+    *ngIf="!loggedInUser?.superhost"
+  >
+    <h3 class="text-2xl font-semibold text-primary mb-4">
+      Get started by entering your email
+    </h3>
+    <form
+      (submit)="submitHostEmail()"
+      #hostForm="ngForm"
+      class="flex flex-col sm:flex-row items-center gap-4"
+    >
+      <input
+        type="email"
+        name="hostEmail"
+        [(ngModel)]="hostEmail"
+        required
+        placeholder="you@example.com"
+        class="w-full sm:w-auto flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/70"
+      />
+      <button
+        type="submit"
+        [disabled]="!hostForm.valid"
+        class="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-dark transition shadow"
+      >
+        Submit
+      </button>
+    </form>
+    <p *ngIf="emailSubmitted" class="text-green-600 mt-3">✅ {{ message }}.</p>
+  </div>
+
+  <!-- Call To Action -->
+  <div class="text-center">
+    <a
+      routerLink="/create-listing"
+      class="bg-gradient-to-r from-primary to-primary-dark text-white px-8 py-3 rounded-full shadow-lg text-lg font-semibold hover:scale-105 transition-transform"
+    >
+      Start Hosting
+    </a>
+  </div>
+</div>

@@ -1,0 +1,211 @@
+@if (listing) {
+  <div class="my-4 space-y-3">
+  <!-- Main Image -->
+  <div class="relative">
+    <img
+      [src]="listing.images.main"
+      alt="Main Image"
+      class="rounded-xl w-full h-48 object-cover"
+    />
+    <!-- Hidden file input for main image -->
+    <input
+      type="file"
+      accept="image/*"
+      #mainImageInput
+      (change)="onMainImageSelected($event, listing)"
+      class="hidden"
+    />
+    <!-- Edit button triggers file input click -->
+    <button
+      (click)="mainImageInput.click()"
+      class="absolute top-2 right-10 bg-white rounded-full shadow p-2 hover:bg-gray-100"
+      title="Edit Main Image"
+    >
+      <!-- Example SVG edit icon -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 text-secondary"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15.232 5.232l3.536 3.536M9 11l6 6M4 20h16"
+        />
+      </svg>
+    </button>
+    <!-- Remove main image button -->
+    <button
+      (click)="removeMainImage(listing)"
+      class="absolute top-2 right-2 bg-white rounded-full shadow p-2 hover:bg-gray-100"
+      title="Remove Main Image"
+    >
+      <!-- Example SVG trash/delete icon -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 text-red-500"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Gallery Images -->
+  <div class="grid grid-cols-3 gap-2 mt-4">
+    <div
+      *ngFor="let img of previewGalleryImages; let i = index"
+      class="relative group rounded-xl overflow-hidden"
+    >
+      <img [src]="img" class="object-cover w-full h-24" />
+      <!-- Hidden file input for each gallery image -->
+      <input
+        type="file"
+        accept="image/*"
+        [attr.data-index]="i"
+        (change)="onGalleryImageSelected($event, listing, i)"
+        class="hidden"
+        #galleryInput
+      />
+      <div
+        class="absolute top-1 right-1 flex space-x-1 opacity-0 group-hover:opacity-100 transition"
+      >
+        <!-- Edit button triggers gallery input click -->
+        <button
+          (click)="galleryInput.click()"
+          class="bg-white rounded-full shadow p-1 text-sm hover:bg-gray-100"
+          title="Edit Gallery Image"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 text-secondary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15.232 5.232l3.536 3.536M9 11l6 6M4 20h16"
+            />
+          </svg>
+        </button>
+        <!-- Remove button -->
+        <button
+          (click)="removeGalleryImage(listing, i)"
+          class="bg-white rounded-full shadow p-1 text-sm text-red-500 hover:bg-gray-100"
+          title="Remove Gallery Image"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Gallery Image -->
+  <button
+    (click)="addGalleryImage(listing)"
+    class="mt-2 text-sm text-secondary hover:underline"
+  >
+    + Add Gallery Image
+  </button>
+</div>
+<!-- Title -->
+<div class="flex justify-between items-start mb-2">
+  <div>
+    <p class="text-lg font-semibold text-gray-800">{{ listing.title }}</p>
+    <p class="text-gray-600">
+      {{ listing.location.city }}, {{ listing.location.country }}
+    </p>
+  </div>
+  <div class="space-x-2">
+    <button
+      (click)="openEditModal(listing, 'title')"
+      class="text-secondary hover:underline text-sm"
+    >
+      Edit Title
+    </button>
+    <button
+      (click)="deleteListing(listing)"
+      class="text-red-500 hover:underline text-sm"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+
+<!-- Editable Sections -->
+<div class="grid grid-cols-2 gap-4">
+  <div>
+    <p><strong>Description:</strong> {{ listing.description }}</p>
+    <button
+      (click)="openEditModal(listing, 'description')"
+      class="text-sm text-secondary hover:underline"
+    >
+      Edit
+    </button>
+  </div>
+  <div>
+    <p><strong>City:</strong> {{ listing.location.city }}</p>
+    <button
+      (click)="openEditModal(listing, 'location.city')"
+      class="text-sm text-secondary hover:underline"
+    >
+      Edit
+    </button>
+  </div>
+  <div>
+    <p><strong>State:</strong> {{ listing.location.state }}</p>
+    <button
+      (click)="openEditModal(listing, 'location.state')"
+      class="text-sm text-secondary hover:underline"
+    >
+      Edit
+    </button>
+  </div>
+  <div>
+    <p><strong>Country:</strong> {{ listing.location.country }}</p>
+    <button
+      (click)="openEditModal(listing, 'location.country')"
+      class="text-sm text-secondary hover:underline"
+    >
+      Edit
+    </button>
+  </div>
+  <div>
+    <p><strong>Price:</strong> ${{ listing.pricing.perNight }}</p>
+    <button
+      (click)="openEditModal(listing, 'pricing.perNight')"
+      class="text-sm text-secondary hover:underline"
+    >
+      Edit
+    </button>
+  </div>
+</div>
+<!-- </div> -->
+
+}

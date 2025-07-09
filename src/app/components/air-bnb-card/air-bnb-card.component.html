@@ -1,0 +1,79 @@
+<div class="relative cursor-pointer">
+  <img
+    [src]="airBnb.images.main"
+    [alt]="airBnb.title"
+    class="w-full h-56 object-cover"
+  />
+  <!-- Wishlist Heart Icon -->
+  <button
+    (click)="clickFavouritesIcon($event)"
+    class="absolute top-3 right-3 bg-white p-1.5 rounded-full shadow hover:scale-110 transition"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5 text-primary fill-current"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 
+             5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 
+             2.09C13.09 3.81 14.76 3 16.5 
+             3 19.58 3 22 5.42 22 8.5c0 
+             3.78-3.4 6.86-8.55 11.54L12 21.35z"
+      />
+    </svg>
+  </button>
+</div>
+
+<div class="p-4">
+  <div class="flex items-center justify-between mb-2">
+    <h3 class="text-lg font-semibold text-gray-900 truncate">
+      {{ airBnb.title }}
+    </h3>
+    <span class="text-sm text-gray-500">
+      {{ airBnb.location.city }}, {{ airBnb.location.state }}
+    </span>
+  </div>
+
+  <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
+    <span>
+      {{ airBnb.features.guests }} guests ·
+      {{ airBnb.features.bedrooms }} bedroom ·
+      {{ airBnb.features.bathrooms }} bath
+    </span>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <div class="flex items-center space-x-1 text-yellow-400 text-sm">
+      <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+        <path
+          d="M10 15l-5.878 3.09 1.123-6.545L.49 6.91l6.564-.955L10 0l2.946 5.955 6.564.955-4.755 4.635 1.123 6.545z"
+        />
+      </svg>
+      <span>{{ airBnb.pricing.rating }}</span>
+      <span class="text-gray-400 ml-1"
+        >({{ airBnb.pricing.rating | number : "1.0-0" }} reviews)</span
+      >
+    </div>
+
+    <div class="text-right">
+      <span class="text-primary font-bold">${{ airBnb.pricing.perNight }}</span>
+      <span class="text-gray-500"> / night</span>
+    </div>
+  </div>
+</div>
+<div
+  class="px-4 pb-4"
+  *ngIf="
+    loggedInUser?.roles?.includes('ROLE_ADMIN') ||
+    (loggedInUser?.roles?.includes('ROLE_HOST') &&
+      loggedInUser?.userId === airBnb.userId)
+  "
+>
+  <button
+    (click)="goToHostPage()"
+    class="mt-2 w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition"
+  >
+    edit details
+  </button>
+</div>

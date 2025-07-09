@@ -1,0 +1,80 @@
+<div class="max-w-5xl mx-auto p-6">
+  <!-- Header -->
+  <div class="mb-6 flex justify-between items-center">
+    <h2 class="text-2xl font-bold text-primary">Edit My Listing</h2>
+    <a
+      (click)="goBackToHomePage()"
+      class="flex items-center text-primary hover:underline cursor-pointer"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 mr-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Back to Home
+    </a>
+  </div>
+
+  <!-- Listings -->
+  <!-- <div
+  
+    *ngFor="let listing of editingListing"
+    class="bg-white p-6 rounded-2xl shadow-md mb-4"
+  > -->
+  <app-host-management-card
+    [listing]="listing"
+    [addGalleryImage]="addGalleryImage"
+    [previewGalleryImages]="previewGalleryImages"
+    [onGalleryImageSelected]="onGalleryImageSelected"
+    [onMainImageSelected]="onMainImageSelected"
+    [deleteListing]="deleteListing"
+    [openEditModal]="openEditModal"
+    [removeGalleryImage]="removeGalleryImage"
+    [removeMainImage]="removeMainImage"
+    [saveEdit]="saveEdit"
+  ></app-host-management-card>
+  <!-- </div> -->
+
+  <!-- MODAL -->
+  <div
+    *ngIf="editingField"
+    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+  >
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+      <h3 class="text-xl font-semibold text-primary mb-4">
+        Edit {{ editingField }}
+      </h3>
+      <form [formGroup]="editForm" (ngSubmit)="saveEdit()" class="space-y-4">
+        <input
+          formControlName="value"
+          [type]="inputType"
+          class="w-full p-3 border rounded-xl shadow-sm"
+        />
+        <div class="flex justify-end gap-3 pt-4">
+          <button
+            type="button"
+            (click)="closeModal()"
+            class="px-4 py-2 rounded-xl border text-gray-600 hover:bg-gray-100"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-primary text-white rounded-xl hover:bg-secondary"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
