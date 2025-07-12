@@ -63,7 +63,7 @@ export class LoginPageComponent implements OnInit {
         this.authService.setUser(res.data);
         setTimeout(() => {
           this.router.navigate(['/']);
-        }, 3000);
+        }, 1000);
       },
       error: (err) => {
         handleError(err, this.toastService);
