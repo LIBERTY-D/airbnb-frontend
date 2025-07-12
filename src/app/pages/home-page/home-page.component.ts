@@ -10,16 +10,23 @@ import { FavouritesService } from '../../services/favourites.service';
 import { FavCard, LoggedInUserResDto } from '../../types';
 import { HouseService } from '../../services/houses.service';
 import { AuthUserService } from '../../services/auth.service';
+import { LoaderComponent } from '../../components/loader/loader.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [AirBnbCardComponent, CommonModule, SwipeRightDirective],
+  imports: [
+    AirBnbCardComponent,
+    CommonModule,
+    SwipeRightDirective,
+    LoaderComponent,
+  ],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent implements OnInit {
   houses: AirbnbListing[] = [];
+  isLoading!: boolean;
   loggedInUser: LoggedInUserResDto | null = null;
   constructor(
     private router: Router,
@@ -33,10 +40,12 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.navBarService.showNavbar();
     this.houseService.houseObserver$.subscribe({
       next: (houses) => {
         this.houses = houses;
+        this.isLoading = false;
       },
     });
 

@@ -9,6 +9,9 @@ import { ToastService } from '../../services/toast.service';
 import { handleError } from '../../utils/errUtil';
 import { UserService } from '../../services/http/user.service.http';
 import { AuthUserService } from '../../services/auth.service';
+import { ListingService } from '../../services/http/listing.service.http';
+import { map } from 'rxjs';
+import { modifyListing } from '../../utils/listingUtil';
 
 @Component({
   selector: 'app-details-page',
@@ -24,11 +27,11 @@ export class DetailsPageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private navBarService: NavBarService,
-    private houseService: HouseService,
     private bookingsService: BookingsService,
     private toastService: ToastService,
     private userService: UserService,
-    private authUserService: AuthUserService
+    private authUserService: AuthUserService,
+    private listingService: ListingService
   ) {}
 
   ngOnInit(): void {
@@ -55,11 +58,18 @@ export class DetailsPageComponent implements OnInit {
   }
 
   private fetchAirBnbData(id: number) {
-    this.houseService.houseObserver$.subscribe({
-      next: (houses) => {
-        this.airBnbHouse = houses.filter((house) => house.id == id)[0];
-      },
-    });
+    this.listingService
+      .getListing(id)
+      .pipe(
+        map(({ data }) => {
+          return modifyListing(data);
+        })
+      )
+      .subscribe({
+        next: (house) => {
+          this.airBnbHouse = house;
+        },
+      });
   }
 
   goToHomePage() {

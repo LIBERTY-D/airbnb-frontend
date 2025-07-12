@@ -1,17 +1,21 @@
+<div class="flex items-center justify-center" *ngIf="isLoading">
+  <app-loader />
+</div>
+
 <div
   class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto p-6"
 >
-  <app-air-bnb-card
-
-    *ngFor="let house of houses"
-    [airBnb]="house"
-    (favEvent)="clickFavouritesIcon(house)"
-    appSwipeRight
-    (swipeRight)="gotToDetailsPageBySwipe(house)"
-    (click)="gotToDetailsPageByClick(house)"
-    (hostHouseEvent)="goToHostPage(house)"
-    [loggedInUser]="loggedInUser"
-    
-  >
-  </app-air-bnb-card>
+  <ng-container *ngIf="!isLoading">
+    <app-air-bnb-card
+      *ngFor="let house of houses"
+      [airBnb]="house"
+      (favEvent)="clickFavouritesIcon(house)"
+      appSwipeRight
+      (swipeRight)="gotToDetailsPageBySwipe(house)"
+      (click)="gotToDetailsPageByClick(house)"
+      (hostHouseEvent)="goToHostPage(house)"
+      [loggedInUser]="loggedInUser"
+    >
+    </app-air-bnb-card>
+  </ng-container>
 </div>
