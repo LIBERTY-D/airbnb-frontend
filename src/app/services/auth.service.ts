@@ -26,7 +26,6 @@ export class AuthUserService {
     this.localStorageService.clearStorage(AUTH_KEY);
   }
 
-  // Get current value
   getCurrentUser(): LoggedInUserResDto | null {
     return this.userSubject.getValue();
   }
