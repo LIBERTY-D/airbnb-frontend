@@ -45,6 +45,7 @@ export class HomePageComponent implements OnInit {
     this.houseService.houseObserver$.subscribe({
       next: (houses) => {
         this.houses = houses;
+        console.log(houses)
         this.isLoading = false;
       },
     });
