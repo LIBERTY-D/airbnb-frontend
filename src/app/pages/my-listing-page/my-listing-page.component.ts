@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthUserService } from '../../services/auth.service';
 import { MyListingCardComponent } from '../../components/my-listing-card/my-listing-card.component';
+import { modifyListing } from '../../utils/listingUtil';
 
 @Component({
   selector: 'app-my-listing-page',
@@ -28,16 +29,11 @@ export class MyListingPageComponent implements OnInit {
     this.AuthUserService.user$.subscribe({
       next: (user) => {
         this.loggedInUser = user;
-
-        this.listings = (user?.listings || []).map((listing) => {
-          listing.images.main = `data:image/png;base64,${listing.images.main}`;
-          listing.images.gallery = listing.images.gallery.map((img) => {
-            img = `data:image/png;base64,${img}`;
-            return img;
+        if (user) {
+          this.listings = user.listings.map((listing) => {
+            return modifyListing(listing);
           });
-
-          return listing;
-        });
+        }
       },
     });
   }
