@@ -15,6 +15,8 @@ import { sucessHandler } from '../../utils/sucessUtil';
 import { base64ToFile } from '../../utils/toBase64';
 import { LocalStorageService } from '../../services/localStorage.service';
 import { FAV_KEY } from '../../constants/app.constant';
+import { map } from 'rxjs';
+import { modifyListing } from '../../utils/listingUtil';
 
 @Component({
   selector: 'app-host-management-page',
@@ -50,14 +52,24 @@ export class HostManagementPageComponent implements OnInit {
     this.navBarService.hideNavbar();
     let id = this.activatedRoute.snapshot.params['id'];
     let newId = parseInt(id);
-    this.houseService.houseObserver$.subscribe({
-      next: (houses) => {
-        this.listing = houses.find((h) => h.id === newId)!;
-        this.previewGalleryImages = (this.listing?.images.gallery || []).filter(
-          (img): img is string => typeof img === 'string'
-        );
-      },
-    });
+    this.fetchAirBnbData(newId);
+  }
+  private fetchAirBnbData(id: number) {
+    this.listingService
+      .getListing(id)
+      .pipe(
+        map(({ data }) => {
+          return modifyListing(data);
+        })
+      )
+      .subscribe({
+        next: (house) => {
+          this.listing = house;
+          this.previewGalleryImages = (
+            this.listing?.images.gallery || []
+          ).filter((img): img is string => typeof img === 'string');
+        },
+      });
   }
   onMainImageSelected = (event: Event, listing: AirbnbListing) => {
     const input = event.target as HTMLInputElement;
