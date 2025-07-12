@@ -5,7 +5,7 @@ export const environment = {
   REGISTER_URL: 'http://localhost:9090/api/v1/users/register',
   LOGIN_GITHUB: 'http://localhost:9090/oauth2/authorization/github',
   LOGIN_GOOGLE: 'http://localhost:9090/oauth2/authorization/google',
-  USER_LOGGEG_URL: 'http://localhost:9090/api/v1/users/auth',
+  USER_LOGGED_URL: 'http://localhost:9090/api/v1/users/auth',
   LISTINGS_URL: 'http://localhost:9090/api/v1/listings',
   BOOKINGS_URL: 'http://localhost:9090/api/v1/bookings',
   
