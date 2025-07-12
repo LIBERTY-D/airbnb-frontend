@@ -4,6 +4,7 @@ import { AirbnbListing } from '../types';
 
 import { NavabrQuery } from '../types/navbar.type';
 import { ListingService } from './http/listing.service.http';
+import { modifyListing } from '../utils/listingUtil';
 
 @Injectable({
   providedIn: 'root',
@@ -44,17 +45,7 @@ export class HouseService {
       .pipe(
         map(({ data }) => {
           return data.map((m) => {
-            if (m.images?.main) {
-              m.images.main = `data:image/png;base64,${m.images.main}`;
-            }
-
-            if (Array.isArray(m.images?.gallery)) {
-              m.images.gallery = m.images.gallery.map(
-                (g) => `data:image/png;base64,${g}`
-              );
-            }
-
-            return m;
+            return modifyListing(m);
           });
         })
       )
