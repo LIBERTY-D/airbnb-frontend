@@ -45,7 +45,7 @@ export class HomePageComponent implements OnInit {
     this.houseService.houseObserver$.subscribe({
       next: (houses) => {
         this.houses = houses;
-        console.log(houses)
+        console.log(houses);
         this.isLoading = false;
       },
     });
@@ -57,7 +57,7 @@ export class HomePageComponent implements OnInit {
     });
   }
   gotToDetailsPageBySwipe(data: AirbnbListing) {
-    this.router.navigate(['details', 'detail', 0]);
+    this.router.navigate(['details', 'detail', data.id]);
     this.navBarService.hideNavbar();
   }
 
